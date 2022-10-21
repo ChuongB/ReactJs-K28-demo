@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const useProductDetails = (id) => {
   const [product, setProduct] = useState([]);
@@ -16,7 +16,7 @@ const useProductDetails = (id) => {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   return product;
 };
