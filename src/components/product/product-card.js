@@ -13,7 +13,7 @@ const ProductCard = ({ product, ...props }) => {
   function handleSelect(id) {
     navigate(`/product/${id}`);
   }
-  const { id, image, title } = product;
+  const { id, image, title, price } = product;
   return (
     <Card sx={{ maxWidth: 600 }}>
       <CardMedia component="img" height="240" image={image} alt={title} />
@@ -24,6 +24,9 @@ const ProductCard = ({ product, ...props }) => {
         <Typography variant="body2" color="text.secondary">
           Lizards are a widespread group of squamate reptiles, with over 6,000
           species, ranging across all continents except Antarctica
+        </Typography>
+        <Typography gutterBottom variant="span" sx={{fontWeight:"bolder", paddingTop:"10px"}} component="div">
+          ${price}.00
         </Typography>
       </CardContent>
       <CardActions>
