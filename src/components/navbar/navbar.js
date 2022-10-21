@@ -9,7 +9,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledAppBar = styled(AppBar)`
+const StyleAppBar = styled(AppBar)`
   .active {
     color: yellow;
   }
@@ -40,7 +40,7 @@ function Navbar() {
   const classes = useStyles();
 
   return (
-    <StyledAppBar position="static">
+    <StyleAppBar position="static">
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
@@ -61,7 +61,7 @@ function Navbar() {
           </NavLink>
         </div>
       </Toolbar>
-    </StyledAppBar>
+    </StyleAppBar>
   );
 }
 export default Navbar;

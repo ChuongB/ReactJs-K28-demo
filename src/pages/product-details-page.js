@@ -4,39 +4,26 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useProductDetails from "../hooks/useProductDetails";
 
 const ProductDetailsPage = () => {
   const params = useParams();
   const navigate = useNavigate();
+  function back() {
+    navigate(-1);
+  }
 
-  const [product, setProduct] = useState([]);
-  const onBack = () => {
-    navigate("/product");
-  };
-  useEffect(() => {
-    async function fetchData() {
-      const { id } = params;
-      const url = `http://localhost:3004/products/${id}`;
-      try {
-        const res = await axios.get(url);
-        if (res && res.data) {
-          setProduct(res.data);
-        }
-      } catch (error) {
-        console.warn(error);
-      }
-    }
-    fetchData();
-  }, []);
+  function addToCard() {
+    //TODO
+  }
+  const product = useProductDetails(params.id);
 
-  const { image, title } = product;
+  const { image, title, price } = product;
   return (
     <Card sx={{ maxWidth: 600, margin: "auto", padding: "50px" }}>
-      <CardMedia component="img" height="320" image={image} alt={title} />
+      <CardMedia component="img" height="240" image={image} alt={title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -45,12 +32,22 @@ const ProductDetailsPage = () => {
           Lizards are a widespread group of squamate reptiles, with over 6,000
           species, ranging across all continents except Antarctica
         </Typography>
+        <Typography
+          gutterBottom
+          variant="span"
+          sx={{ fontWeight: "bolder", paddingTop: "10px" }}
+          component="div"
+        >
+          ${price}.00
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => onBack()}>
+        <Button size="small" onClick={() => back()}>
           Back
         </Button>
-        <Button size="small">Add to card</Button>
+        <Button size="small" onClick={() => addToCard()}>
+          Add to card
+        </Button>
       </CardActions>
     </Card>
   );

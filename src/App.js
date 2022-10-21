@@ -1,26 +1,42 @@
-import React from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import React, { Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
-import AboutPage from "./pages/about-page";
-import ContactPage from "./pages/contact-page";
-import HomePage from "./pages/home-page";
-import ProductPage from "./pages/product-page";
-import ProductDetailsPage from "./pages/product-details-page";
+const HomePage = React.lazy(() => import("./pages/home-page"));
+const ContactPage = React.lazy(() => import("./pages/contact-page"));
+const ProductPage = React.lazy(() => import("./pages/product-page"));
+const ProductDetailsPage = React.lazy(() =>
+  import("./pages/product-details-page")
+);
+const AboutPage = React.lazy(() => import("./pages/about-page"));
+const NotFound = React.lazy(() => import("./pages/not-found"));
+const PrivateRoutes = React.lazy(() => import("./pages/private-routes"));
+const Account = React.lazy(() => import("./pages/account"));
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/product/:id" element={<ProductDetailsPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
-    </BrowserRouter>
+      <Suspense fallback={<p> Loading...</p>}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/account" element={<Account />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </Router>
   );
 };
 export default App;
