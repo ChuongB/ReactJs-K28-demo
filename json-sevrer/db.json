@@ -2,35 +2,35 @@
   "products": [
     {
       "image": "https://sparkimg.nl/cdn-cgi/image/w=960,h=640,fit=pad,f=auto/https://static.iphoned.nl/orca/products/18695/apple-iphone-14-pro.jpg",
-      "title": "Iphone 14 Pro Max 256Gb",
+      "name": "Iphone 14 Pro Max 256Gb",
       "price": 1000,
       "SKU": "sku",
       "id": "1",
-      "quantity": 0
+      "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
     },
     {
       "image": "https://sparkimg.nl/cdn-cgi/image/w=960,h=640,fit=pad,f=auto/https://static.iphoned.nl/orca/products/18695/apple-iphone-14-pro.jpg",
-      "title": "Iphone 14 Pro Max 256Gb",
+      "name": "Iphone 14 Pro Max 256Gb",
       "price": 1000,
       "SKU": "sku",
       "id": "2",
-      "quantity": 0
+      "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
     },
     {
       "image": "https://sparkimg.nl/cdn-cgi/image/w=960,h=640,fit=pad,f=auto/https://static.iphoned.nl/orca/products/18695/apple-iphone-14-pro.jpg",
-      "title": "Iphone 14 Pro Max 256Gb",
+      "name": "Iphone 14 Pro Max 256Gb",
       "price": 1000,
       "SKU": "sku",
       "id": "3",
-      "quantity": 0
+      "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
     },
     {
       "image": "https://sparkimg.nl/cdn-cgi/image/w=960,h=640,fit=pad,f=auto/https://static.iphoned.nl/orca/products/18695/apple-iphone-14-pro.jpg",
-      "title": "Iphone 14 Pro Max 256Gb",
+      "name": "Iphone 14 Pro Max 256Gb",
       "price": 1000,
       "SKU": "sku",
       "id": "4",
-      "quantity": 0
+      "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
     }
   ]
 }
