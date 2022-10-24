@@ -5,12 +5,19 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addToCart } from "../../redux/product/productSlice";
 
 const ProductCard = ({ product, ...props }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   function handleSelect(id) {
     navigate(`/product/${id}`);
+  }
+  function addToCard() {
+    //TODO
+    dispatch(addToCart(product));
   }
 
   const { id, image, title, price, description } = product;
@@ -34,9 +41,11 @@ const ProductCard = ({ product, ...props }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
         <Button size="small" onClick={() => handleSelect(id)}>
           Details
+        </Button>
+        <Button size="small" onClick={() => addToCard()}>
+          Add to Cart
         </Button>
       </CardActions>
     </Card>
