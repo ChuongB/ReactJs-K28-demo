@@ -31,12 +31,7 @@ const ProductCard = ({ product, ...props }) => {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-        <Typography
-          gutterBottom
-          variant="span"
-          sx={{ fontWeight: "bolder", paddingTop: "10px" }}
-          component="div"
-        >
+        <Typography gutterBottom variant="span" sx={{ fontWeight: "bolder", paddingTop: "10px" }} component="div">
           ${price}.00
         </Typography>
       </CardContent>
