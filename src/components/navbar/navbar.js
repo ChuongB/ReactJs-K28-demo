@@ -5,9 +5,14 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+
 
 const StyleAppBar = styled(AppBar)`
   .active {
@@ -37,7 +42,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar() {
+  const { cart } = useSelector((state) => state.product);
   const classes = useStyles();
+
+  function getToTal() {
+    return cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
 
   return (
     <StyleAppBar position="static">
@@ -56,8 +66,12 @@ function Navbar() {
           <NavLink to="/about" className={classes.link}>
             About
           </NavLink>
-          <NavLink to="/contact" className={classes.link}>
-            Contact
+          <NavLink to="/cart" className={classes.link}>
+            <IconButton aria-label="cart" sx={{margin:"-10px"}}>
+              <Badge badgeContent={getToTal()} color="success">
+                <ShoppingCartIcon sx={{color:"white"}}/>
+              </Badge>
+            </IconButton>
           </NavLink>
         </div>
       </Toolbar>

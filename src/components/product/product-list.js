@@ -1,14 +1,18 @@
 import Box from "@mui/material/Box";
 import React from "react";
-import useProduct from "../../hooks/useProduct";
 import ProductCard from "./product-card";
+import { useGetProductsQuery } from "../../redux/product/api";
+import { useSelector } from "react-redux";
 const ProductList = () => {
-  const products = useProduct();
-
+  useGetProductsQuery();
+  const { products } = useSelector((state) => state.product);
   function renderListCard() {
-    return products.map((product) => (
-      <ProductCard key={product.id} product={product}></ProductCard>
-    ));
+    return (
+      products &&
+      products.map((product) => (
+        <ProductCard key={product.id} product={product}></ProductCard>
+      ))
+    );
   }
 
   return (
