@@ -24,7 +24,7 @@ const ProductDetailsPage = () => {
 
   const { data: product } = useGetProductDetailsQuery(id);
 
-  const { image, title, price } = product || {};
+  const { image, name, price } = product || {};
   return (
     product && (
       <Box sx={{ padding: "50px" }}>
@@ -34,11 +34,11 @@ const ProductDetailsPage = () => {
             component="img"
             height="320"
             image={image}
-            alt={title}
+            alt={name}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {title}
+              {name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Lizards are a widespread group of squamate reptiles, with over

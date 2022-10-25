@@ -19,13 +19,13 @@ const ProductCard = ({ product, ...props }) => {
     dispatch(addToCart(product));
   }
 
-  const { id, image, title, price, description } = product;
+  const { id, image, name, price, description } = product;
   return (
     <Card sx={{ maxWidth: 600, padding: "20px" }}>
-      <CardMedia component="img" height="280" image={image} alt={title} />
+      <CardMedia component="img" height="280" image={image} alt={name} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {description}
