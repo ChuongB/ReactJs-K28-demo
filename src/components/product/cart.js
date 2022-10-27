@@ -1,28 +1,18 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { useDispatch } from "react-redux";
-import {
-  incrementCartItem,
-  decrementCartItem,
-} from "../../redux/product/productSlice";
 const Cart = ({ cart, ...props }) => {
-  const dispatch = useDispatch();
   function getToTal() {
     return cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
   }
-  function handleDecrementItem(item) {
-    dispatch(decrementCartItem(item));
-  }
+  function handleDecrementItem(item) {}
 
-  function handleIncrementItem(item) {
-    dispatch(incrementCartItem(item));
-  }
+  function handleIncrementItem(item) {}
   function renderListCart() {
     return cart.map((item) => {
       const { id, name, quantity, price, image } = item;

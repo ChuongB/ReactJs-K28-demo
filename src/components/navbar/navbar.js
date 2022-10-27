@@ -8,11 +8,14 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
-import React from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { AppContext } from "../../App";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const StyleAppBar = styled(AppBar)`
   .active {
@@ -42,12 +45,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar() {
-  const { cart } = useSelector((state) => state.product);
   const classes = useStyles();
+  const {
+    state: { cart },
+  } = useContext(AppContext);
 
   function getToTal() {
     return cart.reduce((sum, item) => sum + item.quantity, 0);
   }
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <StyleAppBar position="static">
@@ -63,13 +77,38 @@ function Navbar() {
           <NavLink to="/product" className={classes.link}>
             Product
           </NavLink>
-          <NavLink to="/about" className={classes.link}>
-            About
+          <NavLink className={classes.link}>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <AccountCircleIcon sx={{ color: "white" }} />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <Link to="/login">Login</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link to="/signup">Signup</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
           </NavLink>
           <NavLink to="/cart" className={classes.link}>
-            <IconButton aria-label="cart" sx={{margin:"-10px"}}>
+            <IconButton aria-label="cart" sx={{ margin: "-10px" }}>
               <Badge badgeContent={getToTal()} color="success">
-                <ShoppingCartIcon sx={{color:"white"}}/>
+                <ShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
             </IconButton>
           </NavLink>

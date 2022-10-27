@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import React from "react";
+import useProduct from "../../hooks/useProduct";
 import ProductCard from "./product-card";
-import { useGetProductsQuery } from "../../redux/product/api";
-import { useSelector } from "react-redux";
+import CardSkeleton from "./cardSkeleton";
 const ProductList = () => {
-  useGetProductsQuery();
-  const { products } = useSelector((state) => state.product);
+  const { data: products, loading } = useProduct();
+
   function renderListCard() {
     return (
       products &&
@@ -15,7 +15,27 @@ const ProductList = () => {
     );
   }
 
-  return (
+  function renderLoading() {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: "50px",
+        }}
+      >
+        {[...Array.from(Array(10))].map((item) => {
+          return <CardSkeleton key={item} />;
+        })}
+      </Box>
+    );
+  }
+
+  return loading ? (
+    renderLoading()
+  ) : (
     <Box sx={{ display: "flex", padding: "50px", gap: "30px" }}>
       {renderListCard()}
     </Box>

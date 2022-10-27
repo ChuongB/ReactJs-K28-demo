@@ -1,23 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import waiting from "./waiting";
 const useProduct = () => {
-  const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   useEffect(() => {
     async function fetchData() {
       const url = "http://localhost:3004/products";
       try {
+        await waiting(1500);
         const res = await axios.get(url);
         if (res && res.data) {
-          setProducts(res.data);
+          setData(res.data);
         }
       } catch (error) {
-        console.warn(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
   }, []);
 
-  return products;
+  return { data, loading, error };
 };
 
 export default useProduct;

@@ -32,5 +32,21 @@
       "id": "4",
       "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
     }
+  ],
+  "users": [
+    {
+      "email": "thechuong0806@gmail.com",
+      "fullname": "chuong",
+      "password": "11111111",
+      "confirmPassword": "11111111",
+      "id": 1
+    },
+    {
+      "email": "thechuong0808@gmail.com",
+      "fullname": "chuong",
+      "password": "11111111",
+      "confirmPassword": "11111111",
+      "id": 2
+    }
   ]
 }

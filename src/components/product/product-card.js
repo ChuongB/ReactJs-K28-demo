@@ -4,19 +4,18 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { addToCart } from "../../redux/product/productSlice";
-
+import { AppContext } from "../../App";
+import { actionTypes } from "../../store/reducer";
 const ProductCard = ({ product, ...props }) => {
-  const dispatch = useDispatch();
+  const { dispatch } = useContext(AppContext);
   const navigate = useNavigate();
   function handleSelect(id) {
     navigate(`/product/${id}`);
   }
   function handleAddToCart() {
-    dispatch(addToCart(product));
+    dispatch({ type: actionTypes.ADD_TO_CART, payload: product });
   }
 
   const { id, image, name, price, description } = product;
