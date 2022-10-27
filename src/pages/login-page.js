@@ -11,6 +11,10 @@ import waiting from "../hooks/waiting";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useContext } from "react";
+import { AppContext } from "../App";
+import { actionTypes } from "../store/reducer";
+import { Link } from "react-router-dom";
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -23,6 +27,7 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
+  const { dispatch } = useContext(AppContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
@@ -46,6 +51,10 @@ const LoginPage = () => {
       const find = res.data.find((user) => user.email === values.email);
 
       if (find && find.password === values.password) {
+        dispatch({
+          type: actionTypes.LOGIN_SUCCESS,
+          payload: find,
+        });
         toast.success("Login successful");
         navigate("/home");
         return;
@@ -88,7 +97,7 @@ const LoginPage = () => {
               onBlur={formik.handleBlur}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
-              style={{ marginBottom: "20px" }}
+              style={{ marginBottom: "40px" }}
             />
             <Button
               color="primary"
@@ -96,10 +105,27 @@ const LoginPage = () => {
               fullWidth
               type="submit"
               disabled={loading}
+              style={{ height: "50px" }}
             >
-              {loading && <CircularProgress />}
+              {loading && <CircularProgress style={{ marginRight: "10px" }} />}
               Login
             </Button>
+
+            <Box
+              sx={{ textAlign: "center", paddingTop: "20px", color: "gray" }}
+            >
+              <span>Don't have an account? </span>
+              <Link
+                to="/signup"
+                style={{
+                  color: "blue",
+                  marginLeft: "5px",
+                  textDecoration: "none",
+                }}
+              >
+                Signup now
+              </Link>
+            </Box>
           </form>
         </CardContent>
       </Card>

@@ -5,21 +5,26 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
-import React, { useContext } from "react";
-import { NavLink, Link } from "react-router-dom";
-import styled from "styled-components";
-import { AppContext } from "../../App";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { AppContext } from "../../App";
+import { actionTypes } from "../../store/reducer";
 
 const StyleAppBar = styled(AppBar)`
   .active {
     color: yellow;
+  }
+  .login {
+    text-decoration: none;
+    color: black;
   }
 `;
 
@@ -27,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
+    gap: "50px",
+    alignItems: "center",
   },
   logo: {
     flexGrow: "1",
@@ -35,11 +42,11 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: "white",
-    fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    fontSize: "18px",
     "&:hover": {
       color: "yellow",
       borderBottom: "1px solid white",
+      textDecoration: "none !important",
     },
   },
 }));
@@ -47,11 +54,14 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const classes = useStyles();
   const {
-    state: { cart },
+    state: { cart, user, isLoggedIn },
+    dispatch,
   } = useContext(AppContext);
-
   function getToTal() {
     return cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+  function handleLogout() {
+    dispatch({ type: actionTypes.LOGOUT, payload: null });
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,7 +95,19 @@ function Navbar() {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <AccountCircleIcon sx={{ color: "white" }} />
+              <AccountCircleIcon sx={{ color: "white" }} />{" "}
+              {user && (
+                <span
+                  style={{
+                    color: "white",
+                    textTransform: "capitalize",
+                    marginLeft: "10px",
+                    fontSize: "16px",
+                  }}
+                >
+                  Hello, {user.fullname}
+                </span>
+              )}
             </Button>
             <Menu
               id="basic-menu"
@@ -95,14 +117,27 @@ function Navbar() {
               MenuListProps={{
                 "aria-labelledby": "basic-button",
               }}
+              PaperProps={{ sx: { width: "150px" } }}
             >
-              <MenuItem onClick={handleClose}>
-                <Link to="/login">Login</Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link to="/signup">Signup</Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              {!isLoggedIn ? (
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Login
+                  </Link>
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              )}
             </Menu>
           </NavLink>
           <NavLink to="/cart" className={classes.link}>

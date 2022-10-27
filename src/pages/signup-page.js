@@ -11,6 +11,7 @@ import waiting from "../hooks/waiting";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Link } from "react-router-dom";
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -135,10 +136,26 @@ const SignupPage = () => {
               fullWidth
               type="submit"
               disabled={loading}
+              style={{ height: "50px" }}
             >
-              {loading && <CircularProgress />}
+              {loading && <CircularProgress style={{ marginRight: "10px" }} />}
               Submit
             </Button>
+            <Box
+              sx={{ textAlign: "center", paddingTop: "20px", color: "gray" }}
+            >
+              <span>Already have an account? </span>
+              <Link
+                to="/login"
+                style={{
+                  color: "blue",
+                  marginLeft: "5px",
+                  textDecoration: "none",
+                }}
+              >
+                Login
+              </Link>
+            </Box>
           </form>
         </CardContent>
       </Card>

@@ -1,4 +1,4 @@
-import React, { Suspense, useReducer } from "react";
+import React, { Suspense, useReducer, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import { rootReducer } from "./store/reducer";
+import { actionTypes } from "./store/reducer";
 const HomePage = React.lazy(() => import("./pages/home-page"));
 const ProductPage = React.lazy(() => import("./pages/product-page"));
 const ProductDetailsPage = React.lazy(() =>
@@ -26,12 +27,21 @@ const initialState = {
   products: [],
   product: null,
   cart: [],
+  isLoggedIn: false,
+  user: null,
 };
 
 export const AppContext = React.createContext();
 
 const App = () => {
   const [state, dispatch] = useReducer(rootReducer, initialState);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: JSON.parse(user) });
+    }
+  }, []);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
