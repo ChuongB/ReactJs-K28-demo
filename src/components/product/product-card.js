@@ -4,12 +4,12 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../App";
+import { useAppContext } from "../../App";
 import { actionTypes } from "../../store/reducer";
 const ProductCard = ({ product, ...props }) => {
-  const { dispatch } = useContext(AppContext);
+  const { dispatch } = useAppContext();
   const navigate = useNavigate();
   function handleSelect(id) {
     navigate(`/product/${id}`);

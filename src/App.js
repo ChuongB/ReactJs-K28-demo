@@ -1,4 +1,10 @@
-import React, { Suspense, useReducer, useEffect } from "react";
+import React, {
+  Suspense,
+  useReducer,
+  useEffect,
+  useContext,
+  useMemo,
+} from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -32,6 +38,7 @@ const initialState = {
 };
 
 export const AppContext = React.createContext();
+export const useAppContext = () => useContext(AppContext);
 
 const App = () => {
   const [state, dispatch] = useReducer(rootReducer, initialState);
@@ -43,8 +50,12 @@ const App = () => {
     }
   }, []);
 
+  const contextValue = useMemo(() => {
+    return { state, dispatch };
+  }, [state, dispatch]);
+
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={contextValue}>
       <Router>
         <Navbar />
         <Suspense fallback={<p> Loading...</p>}>
