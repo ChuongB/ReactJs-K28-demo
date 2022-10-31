@@ -24,10 +24,14 @@ const ProductDetailsPage = React.lazy(() =>
 );
 const NotFound = React.lazy(() => import("./pages/not-found"));
 const PrivateRoutes = React.lazy(() => import("./pages/private-routes"));
-const Account = React.lazy(() => import("./pages/account"));
 const CartPage = React.lazy(() => import("./pages/cart-page"));
 const LoginPage = React.lazy(() => import("./pages/login-page"));
 const SignupPage = React.lazy(() => import("./pages/signup-page"));
+const ProfilePage = React.lazy(() => import("./pages/profile-page"));
+const AdminPage = React.lazy(() => import("./pages/admin-page"));
+const ProductListManagementPage = React.lazy(() =>
+  import("./pages/product-management/product-list")
+);
 
 const initialState = {
   products: [],
@@ -61,14 +65,21 @@ const App = () => {
         <Suspense fallback={<p> Loading...</p>}>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/product" element={<ProductPage />} />
-            <Route path="/product/:id" element={<ProductDetailsPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+            <Route path="home" element={<HomePage />} />
+            <Route path="product" element={<ProductPage />} />
+            <Route path="product/:id" element={<ProductDetailsPage />} />
+            <Route path="cart" element={<CartPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignupPage />} />
             <Route element={<PrivateRoutes />}>
-              <Route path="/account" element={<Account />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="admin" element={<AdminPage />}>
+                <Route path="" element={<Navigate to="products" />} />
+                <Route
+                  path="products"
+                  element={<ProductListManagementPage />}
+                />
+              </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

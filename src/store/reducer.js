@@ -6,6 +6,8 @@ export const actionTypes = {
   DECREMENT_CART_ITEM: "DECREMENT_CART_ITEM",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGOUT: "LOGOUT",
+  GET_USER: "GET_USER",
+  SET_USER: "GET_USER",
 };
 
 export const rootReducer = (state, action) => {
@@ -26,6 +28,13 @@ export const rootReducer = (state, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+      };
+    }
+    case actionTypes.SET_USER: {
+      localStorage.setItem("user", JSON.stringify(payload));
+      return {
+        ...state,
+        user: payload,
       };
     }
     case actionTypes.GET_PRODUCTS: {

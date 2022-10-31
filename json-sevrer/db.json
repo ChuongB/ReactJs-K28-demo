@@ -36,10 +36,11 @@
   "users": [
     {
       "email": "thechuong0806@gmail.com",
-      "fullname": "chuong",
+      "fullname": "chuong22",
       "password": "11111111",
       "confirmPassword": "11111111",
-      "id": 1
+      "id": 1,
+      "address": "HCM "
     },
     {
       "email": "thechuong0808@gmail.com",

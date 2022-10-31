@@ -20,10 +20,11 @@ const ProductList = () => {
       <Box
         sx={{
           display: "flex",
-          gap: "20px",
+          gap: "30px",
           flexWrap: "wrap",
           justifyContent: "center",
-          marginTop: "50px",
+          maxWidth: "1200px",
+          margin: "50px auto",
         }}
       >
         {[...Array.from(Array(10))].map((item) => {
@@ -36,7 +37,14 @@ const ProductList = () => {
   return loading ? (
     renderLoading()
   ) : (
-    <Box sx={{ display: "flex", padding: "50px", gap: "30px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: "30px",
+        margin: "50px auto",
+        maxWidth: "1200px",
+      }}
+    >
       {renderListCard()}
     </Box>
   );

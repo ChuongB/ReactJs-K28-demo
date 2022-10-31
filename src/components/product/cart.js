@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { actionTypes } from "../../store/reducer";
 import { AppContext } from "../../App";
 import { useContext } from "react";
+
 const Cart = ({ cart, ...props }) => {
   const { dispatch } = useContext(AppContext);
   function getToTal() {
@@ -76,7 +77,6 @@ const Cart = ({ cart, ...props }) => {
       }}
     >
       <Box gap="30px" alignItems="center" flexDirection="column" width="100%">
-        {" "}
         {renderListCart()}
       </Box>
       <Typography variant="h6" textAlign="end">

@@ -119,16 +119,29 @@ function Navbar() {
               }}
               PaperProps={{ sx: { width: "150px" } }}
             >
-              {!isLoggedIn ? (
+              {isLoggedIn && (
                 <MenuItem onClick={handleClose}>
                   <Link
-                    to="/login"
+                    to="/profile"
                     style={{ textDecoration: "none", color: "black" }}
                   >
-                    Login
+                    My Profile
                   </Link>
                 </MenuItem>
-              ) : (
+              )}
+
+              {isLoggedIn && (
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/admin"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Admin
+                  </Link>
+                </MenuItem>
+              )}
+
+              {isLoggedIn && (
                 <MenuItem
                   onClick={() => {
                     handleClose();
@@ -136,6 +149,17 @@ function Navbar() {
                   }}
                 >
                   Logout
+                </MenuItem>
+              )}
+
+              {!isLoggedIn && (
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Login
+                  </Link>
                 </MenuItem>
               )}
             </Menu>
