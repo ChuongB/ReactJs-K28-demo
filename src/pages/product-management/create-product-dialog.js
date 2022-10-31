@@ -22,11 +22,15 @@ const validationSchema = yup.object({
   image: yup.string("Enter product image").required("Image is required"),
 });
 
-export default function CreateProductDialog({ openDialog, ...props }) {
+export default function CreateProductDialog({
+  openDialog,
+  setOpenDialog,
+  ...props
+}) {
   const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
-    props.setOpenDialog(false);
+    setOpenDialog(false);
   };
 
   const formik = useFormik({
@@ -56,6 +60,7 @@ export default function CreateProductDialog({ openDialog, ...props }) {
       const res = await axios.post(url, values);
       if (res && res.data) {
         toast.success("Create product successful");
+        props.handleReloadProducts();
         handleClose();
         formik.resetForm();
       }

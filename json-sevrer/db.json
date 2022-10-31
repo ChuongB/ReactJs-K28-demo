@@ -6,7 +6,8 @@
       "price": 1000,
       "SKU": "sku",
       "id": "1",
-      "description": "Ceramic Shield front Textured matte glass back and stainless steel design"
+      "description": "Ceramic Shield front Textured matte glass back and stainless steel design",
+      "sku": ""
     },
     {
       "image": "https://sparkimg.nl/cdn-cgi/image/w=960,h=640,fit=pad,f=auto/https://static.iphoned.nl/orca/products/18695/apple-iphone-14-pro.jpg",
@@ -36,7 +37,7 @@
   "users": [
     {
       "email": "thechuong0806@gmail.com",
-      "fullname": "chuong22",
+      "fullname": "chuong23",
       "password": "11111111",
       "confirmPassword": "11111111",
       "id": 1,

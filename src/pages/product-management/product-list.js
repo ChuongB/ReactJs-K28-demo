@@ -11,14 +11,16 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useState } from "react";
-import useProduct from "../../hooks/useProduct";
+import { useState, useEffect } from "react";
 import CreateProductDialog from "./create-product-dialog";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const ProductListManagementPage = () => {
-  const { data: products, loading } = useProduct();
   const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const displayedColumn = [
     "Image",
     "Name",
@@ -31,13 +33,35 @@ const ProductListManagementPage = () => {
     setOpenDialog(true);
   }
 
+  function handleReloadProducts() {
+    loadProduct();
+  }
+
+  async function loadProduct() {
+    setLoading(true);
+    const url = "http://localhost:3004/products";
+
+    try {
+      const res = await axios.get(url);
+      if (res && res.data) {
+        setProducts(res.data);
+      }
+    } catch (e) {
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleDeleteProduct(id) {
     const url = `http://localhost:3004/products/${id}`;
     await axios.delete(url);
     toast.success("Delete product successful");
     //TOTO: reset list
-    
+    handleReloadProducts();
   }
+  useEffect(() => {
+    loadProduct();
+  }, []);
 
   return (
     <Box sx={{ padding: " 10px 20px" }}>
@@ -92,12 +116,18 @@ const ProductListManagementPage = () => {
                       />
                     </TableCell>
                     <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="left">{row.SKU}</TableCell>
+                    <TableCell align="left">{row.sku}</TableCell>
                     <TableCell align="left">{row.description}</TableCell>
                     <TableCell align="left">{row.price}</TableCell>
                     <TableCell align="left">
                       <Box sx={{ display: "flex" }}>
-                        <IconButton aria-label="edit" color="primary">
+                        <IconButton
+                          aria-label="edit"
+                          color="primary"
+                          onClick={() => {
+                            navigate(row.id);
+                          }}
+                        >
                           <EditIcon />
                         </IconButton>
                         <IconButton
@@ -119,6 +149,7 @@ const ProductListManagementPage = () => {
       <CreateProductDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        handleReloadProducts={handleReloadProducts}
       />
     </Box>
   );

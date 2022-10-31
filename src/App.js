@@ -32,6 +32,9 @@ const AdminPage = React.lazy(() => import("./pages/admin-page"));
 const ProductListManagementPage = React.lazy(() =>
   import("./pages/product-management/product-list")
 );
+const ProductDetailsManagementPages = React.lazy(() =>
+  import("./pages/product-management/product-details")
+);
 
 const initialState = {
   products: [],
@@ -64,7 +67,7 @@ const App = () => {
         <Navbar />
         <Suspense fallback={<p> Loading...</p>}>
           <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/" element={<Navigate to="home" />} />
             <Route path="home" element={<HomePage />} />
             <Route path="product" element={<ProductPage />} />
             <Route path="product/:id" element={<ProductDetailsPage />} />
@@ -78,6 +81,10 @@ const App = () => {
                 <Route
                   path="products"
                   element={<ProductListManagementPage />}
+                />
+                <Route
+                  path="products/:id"
+                  element={<ProductDetailsManagementPages />}
                 />
               </Route>
             </Route>
