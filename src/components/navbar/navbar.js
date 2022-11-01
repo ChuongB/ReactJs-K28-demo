@@ -62,6 +62,7 @@ function Navbar() {
   }
   function handleLogout() {
     dispatch({ type: actionTypes.LOGOUT, payload: null });
+    handleClose();
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -131,7 +132,6 @@ function Navbar() {
               ) : (
                 <MenuItem
                   onClick={() => {
-                    handleClose();
                     handleLogout();
                   }}
                 >

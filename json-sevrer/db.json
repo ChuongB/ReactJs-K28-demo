@@ -47,6 +47,13 @@
       "password": "11111111",
       "confirmPassword": "11111111",
       "id": 2
+    },
+    {
+      "email": "minhanh1747@gmail.com",
+      "fullname": "Chuong Bui",
+      "password": "11111111",
+      "confirmPassword": "11111111",
+      "id": 3
     }
   ]
 }

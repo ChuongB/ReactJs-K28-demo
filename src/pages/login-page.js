@@ -105,9 +105,10 @@ const LoginPage = () => {
               fullWidth
               type="submit"
               disabled={loading}
-              style={{ height: "50px" }}
             >
-              {loading && <CircularProgress style={{ marginRight: "10px" }} />}
+              {loading && (
+                <CircularProgress size={20} style={{ marginRight: "10px" }} />
+              )}
               Login
             </Button>
 
