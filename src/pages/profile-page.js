@@ -138,10 +138,9 @@ const ProfilePage = () => {
                 fullWidth
                 type="submit"
                 disabled={loading}
-                style={{ height: "50px" }}
               >
                 {loading && (
-                  <CircularProgress style={{ marginRight: "10px" }} />
+                  <CircularProgress size={20} style={{ marginRight: "10px" }} />
                 )}
                 Update
               </Button>
