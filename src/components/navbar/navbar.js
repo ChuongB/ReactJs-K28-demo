@@ -12,12 +12,11 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useContext } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { AppContext } from "../../App";
 import { actionTypes } from "../../store/reducer";
-
+import { useAppContext } from "../../App";
 const StyleAppBar = styled(AppBar)`
   .active {
     color: yellow;
@@ -56,7 +55,8 @@ function Navbar() {
   const {
     state: { cart, user, isLoggedIn },
     dispatch,
-  } = useContext(AppContext);
+  } = useAppContext();
+
   function getToTal() {
     return cart.reduce((sum, item) => sum + item.quantity, 0);
   }
@@ -120,7 +120,7 @@ function Navbar() {
               }}
               PaperProps={{ sx: { width: "150px" } }}
             >
-              {!isLoggedIn ? (
+              {!isLoggedIn && (
                 <MenuItem onClick={handleClose}>
                   <Link
                     to="/login"
@@ -129,7 +129,31 @@ function Navbar() {
                     Login
                   </Link>
                 </MenuItem>
-              ) : (
+              )}
+
+              {isLoggedIn && (
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/profile"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    My Profile
+                  </Link>
+                </MenuItem>
+              )}
+
+              {isLoggedIn && (
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/admin"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Admin
+                  </Link>
+                </MenuItem>
+              )}
+
+              {isLoggedIn && (
                 <MenuItem
                   onClick={() => {
                     handleLogout();

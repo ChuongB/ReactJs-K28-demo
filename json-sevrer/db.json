@@ -36,10 +36,12 @@
   "users": [
     {
       "email": "thechuong0806@gmail.com",
-      "fullname": "chuong",
+      "fullname": "chuong5",
       "password": "11111111",
       "confirmPassword": "11111111",
-      "id": 1
+      "id": 1,
+      "address": "HCM",
+      "updatedDate": "Tue Nov 01 2022 20:03:31 GMT+0700 (Indochina Time)"
     },
     {
       "email": "thechuong0808@gmail.com",
