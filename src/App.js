@@ -34,6 +34,9 @@ const ProductManagementProductList = React.lazy(() =>
   import("./pages/management/product/product-management-product-list")
 );
 
+const ProductManagementProductDetails = React.lazy(() =>
+  import("./pages/management/product/product-management-product-details")
+);
 const initialState = {
   products: [],
   product: null,
@@ -79,6 +82,10 @@ const App = () => {
                 <Route
                   path="products"
                   element={<ProductManagementProductList />}
+                />
+                <Route
+                  path="products/:id"
+                  element={<ProductManagementProductDetails />}
                 />
               </Route>
             </Route>

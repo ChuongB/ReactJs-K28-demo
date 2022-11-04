@@ -1,24 +1,44 @@
-import * as React from "react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import useProduct from "../../../hooks/useProduct";
-import CircularProgress from "@mui/material/CircularProgress";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import axios from "axios";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import CreateProductDialog from "./create-product-dialog";
-import { useState } from "react";
 
 export default function ProductManagementProductList() {
-  const { data: products, loading } = useProduct();
+  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [pageSize, setPageSize] = useState(+searchParams.get("pageSize"));
+  const [pageIndex, setPageIndex] = useState(+searchParams.get("pageIndex"));
+  const [total, setToTal] = useState(0);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(pageSize, parseInt(newPage));
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    const { value } = event.target;
+    setPage(parseInt(value), 0);
+  };
 
   const displayColumn = [
     "Image",
@@ -31,6 +51,58 @@ export default function ProductManagementProductList() {
 
   function handleOpenDialog() {
     setOpenDialog(true);
+  }
+
+  function setPage(pageSize, pageIndex) {
+    setPageSize(+pageSize);
+    setPageIndex(+pageIndex);
+    setSearchParams({ pageSize, pageIndex });
+  }
+
+  function handleEdit(id) {
+    navigate(id);
+  }
+
+  function reloadProduct() {
+    fetchProducts();
+  }
+  
+  async function handleDelete(id) {
+    const url = `http://localhost:3004/products/${id}`;
+
+    try {
+      setLoading(true);
+      const res = await axios.delete(url);
+      if (res && res.data) {
+        toast.success("Delete product successfully");
+        fetchProducts();
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (!pageSize && !pageIndex) {
+      setPage(10, 0);
+    }
+
+    fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  async function fetchProducts() {
+    const url = `http://localhost:3004/products?_page=${pageIndex}&_limit=${pageSize}`;
+    try {
+      setLoading(true);
+      const res = await axios.get(url);
+      if (res && res.data) {
+        setProducts(res.data);
+        setToTal(+res.headers["x-total-count"]);
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return loading ? (
@@ -80,11 +152,17 @@ export default function ProductManagementProductList() {
                 <TableCell align="left">{product.price}</TableCell>
                 <TableCell align="left">
                   <Box sx={{ display: "flex" }}>
-                    <IconButton color="primary">
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleEdit(product.id)}
+                    >
                       <EditIcon />
                     </IconButton>
 
-                    <IconButton color="error">
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDelete(product.id)}
+                    >
                       <DeleteOutlineIcon />
                     </IconButton>
                   </Box>
@@ -94,9 +172,19 @@ export default function ProductManagementProductList() {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={total}
+        rowsPerPage={pageSize}
+        page={pageIndex}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
       <CreateProductDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        reloadProduct={reloadProduct}
       />
     </Box>
   );
