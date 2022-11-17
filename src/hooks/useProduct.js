@@ -7,7 +7,7 @@ const useProduct = () => {
   const [error, setError] = useState("");
   useEffect(() => {
     async function fetchData() {
-      const url = "http://localhost:3004/products";
+      const url = "https://demo-json-server-02.vercel.app/products";
       try {
         await waiting(1500);
         const res = await axios.get(url);
